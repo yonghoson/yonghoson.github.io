@@ -105,7 +105,6 @@ author:
        #url: "mailto:yongho.son@stonybrook.edu"
     - label: "Website"
       icon: "fas fa-fw fa-link"
-      #icon: "fab fa-fw fa-linkedin"
        url: "https://www.linkedin.com/in/yongho-son-967460145/"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
