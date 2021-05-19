@@ -98,11 +98,11 @@ author:
   avatar           : "/images/profile.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I am interested in"
   location         : #"Somewhere"
-  email            :
+  email            : 
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-       url: "mailto:yongho.son@stonybrook.edu"
+       #url: "mailto:yongho.son@stonybrook.edu"
     - label: "Website"
       #icon: "fas fa-fw fa-link"
       icon: "fab fa-fw fa-linkedin"
