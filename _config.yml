@@ -97,16 +97,16 @@ analytics:
 author:
   name             : "YongHo Son"
   avatar           : "images/profile.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Interested in AI, ML, Deep Learning, Computer Vision. B.A @ Stony Brook University"
+  bio              : "Interested in AI, ML, Deep Learning, Computer Vision. B.A @ Stony Brook University."
   location         : #"Somewhere"
-  email            : 
+  email            : #""
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
        url: "yongho.son@stonybrook.edu"
     - label: "Website"
-      icon: "fab fa-fw fa-linkedin"
-       url: "https://www.linkedin.com/in/yongho-son-967460145/"
+      icon: "fas fa-fw fa-link"
+      # url: "https://your-website.com"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       # url: "https://twitter.com/"
