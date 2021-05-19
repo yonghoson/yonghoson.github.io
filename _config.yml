@@ -97,7 +97,7 @@ author:
   name             : "YongHo Son"
   avatar           : "/images/profile.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I am interested in AI, ML, Deep Learning, Computer Vision. B.A @ Stony Brook University"
-  location         : #"Somewhere"
+  location         : #"South Korea"
   email            : 
   links:
     - label: "Email"
