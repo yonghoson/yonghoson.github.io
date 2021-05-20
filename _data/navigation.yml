@@ -1,7 +1,7 @@
 # main links
 main:
   - title: "CV"
-    url: /res/resume.pdf/
+    url: "/res/resume.pdf"
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   - title: "ACADEMICS"
