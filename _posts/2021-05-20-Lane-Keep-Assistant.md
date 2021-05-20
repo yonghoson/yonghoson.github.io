@@ -4,9 +4,8 @@ categories:
 tags:
    - 
 ---
-> 아니 됐고 키보드 밑에 저거 어떻게 없애냐고
+> The real-time lane keep assistant using opencv library.
 
-라고 생각하시는 분은 서론이 기니 목차에서 2번 문단만 읽으시면 됩니다!
 
 - - - 
 
