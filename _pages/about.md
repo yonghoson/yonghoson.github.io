@@ -1,7 +1,7 @@
 ---
-permalink: /about/
-title: "About"
-excerpt: "about.md"
+title: "Posts by Category"
+layout: categories
+permalink: /categories/
 author_profile: true
 ---
 
