@@ -13,7 +13,7 @@ tags:
 ## Overall Module Structure
 For this project, there will the main module that will connects to all various modules. The reason for having different modules for each different functionalities is that adding different modules or modifying modules becomes very convenient in this structure when upgrade in the future.
 
-![structure](https://github.com/yonghoson/yonghoson.github.io/blob/master/images/structure.PNG)
+![structure](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/structure.PNG)
 
 
 
