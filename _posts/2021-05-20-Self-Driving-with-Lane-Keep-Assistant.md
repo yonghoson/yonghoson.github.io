@@ -30,9 +30,11 @@ def thresholding(img):
 ```
 The above code simply converts the image to HSV color space and then apply a range of color to find the white paper path.
 
-![structure](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/imgThres.PNG)
+![imgThres](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/imgThres.PNG)
 
 ## Step 2 - Bird Eye View (Warping)
+
+
 
 ```java
     Retrofit retrofit =  new  Retrofit.Builder()  
