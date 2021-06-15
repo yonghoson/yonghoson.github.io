@@ -36,7 +36,7 @@ The above code simply converts the image to HSV color space and then apply a ran
 
 
 
-```java
+```python
     Retrofit retrofit =  new  Retrofit.Builder()  
 	    .baseUrl("https://api.github.com/")  
 	    .build();
