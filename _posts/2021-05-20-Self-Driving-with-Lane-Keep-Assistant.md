@@ -129,7 +129,122 @@ Now we can visualize the curve values with respect to the current path of our se
 * Motor: iRobot Create® 2 Programmable Robot
 
 ### Webcam Module
+```python
+def getImg(display=False, size=[480, 240]):
+    stream = io.BytesIO()
 
+    with picamera.PiCamera() as camera:
+            camera.start_preview()
+            #time.sleep(0.1)
+            with picamera.array.PiRGBArray(camera) as stream:
+                camera.capture(stream, format='bgr')
+                # At this point the image is available as stream.array
+                img = stream.array
+
+    #_, img = cap.read()
+    img = cv2.resize(img, (size[0], size[1]))
+
+    if display:
+        cv2.imshow('IMG', img)
+    return img
+
+
+if __name__ == '__main__':
+    while True:
+        img = getImg(True)
+```
+
+### Motor Module
+```python
+PORT = "/dev/ttyUSB0" # Don't remove the /dev/ portion
+
+class Motor():
+    def __init__(self):
+        # Create a Create2
+        self.bot = Create2(PORT)
+
+        # Start the Create 2
+        self.bot.start()
+
+        # The Create has several modes, Off, Passive, Safe, and Full.
+        # Safe: Roomba stops when it detects a cliff, detects a wheel drop, or if on the charger
+        # Full: Roomba does not stop when it encounters an event above
+        # Passive: Roomba sends sensor data but does not accept changes to sensors or wheels
+
+        self.bot.safe()
+
+    def move(self, speed=0.5, turn=0, t=0):
+        speed_val = 80
+        speed *= 80
+        turn *= 40
+        leftSpeed = speed - turn
+        rightSpeed = speed + turn
+
+        if leftSpeed > 80:
+            leftSpeed = 80
+        elif leftSpeed < -80:
+            leftSpeed = -80
+        if rightSpeed > 80:
+            rightSpeed = 80
+        elif rightSpeed < -80:
+            rightSpeed = -80
+
+        self.bot.drive_direct(int(rightSpeed), int(leftSpeed))  # inputs for motors are +/- 500 max
+
+    def stop(self):
+        # Stop the bot
+        self.bot.drive_stop()
+
+def main():
+    motor.move(1, 0, 2) # speed, turn, seconds to run
+    time.sleep(2)
+    motor.move(-1, 0, 2)
+    time.sleep(2)
+    motor.move(1, 0.5, 2)
+    time.sleep(2)
+    motor.move(1, -0.5, 2)
+    time.sleep(2)
+
+if __name__ == "__main__":
+    motor = Motor()
+    main()
+```
+
+### Main Module
+```python
+motor = Motor()
+
+def main():
+    img = WebcamModule.getImg() # Get image from webcam
+    curveVal = getLaneCurve(img, 1) # Get the curve value
+    cv2.imshow("img", img)
+    #print(curveVal)
+
+    sen = 1.3 # SENSITIVITY (How much impact on curve)
+    maxVAl = 0.3  # MAX SPEED
+
+    # Define Maximum Speed (Range from 0 to 1)
+    if curveVal > maxVAl: curveVal = maxVAl
+    if curveVal < -maxVAl: curveVal = -maxVAl
+
+    # Define Two Dead Zones (Straight Line)
+    if curveVal > 0:
+        sen = 1.7
+        if curveVal < 0.05: curveVal = 0 # Keep Straight Line
+    else:
+        if curveVal > -0.08: curveVal = 0
+
+    res, objInfo = getObjects(img, False, ['person'])
+    if len(objInfo) == 1:
+        motor.stop()
+    else:
+        motor.move(1, -curveVal * sen, 0.05) # Send to robot
+    cv2.waitKey(1)
+
+if __name__ == '__main__':
+    while True:
+        main()
+```
 
 ## Real-time Demo
 
