@@ -56,7 +56,7 @@ We receives the transformation matrix based on the input points and then warp th
 ## Step 3 - Curve Value Computation
 Now it's time to find curve value through the summation of pixels. Since the warped image is not binary image that has either black or white pixels, summation in the y-direction will give us how many columns have higher threshold values than other portion of the image.
 
-![pixel](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/pixel.PNG)
+![pixel](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/pixel.png)
 
 In the above image, if we have the sum of the pixels in every column. Let's set our threshold value as 1000. From the red line in the center, we can count the number of columns that pass the threshold is 8 on the left side. On the other hand, there are only 3 columns on the right side. Thus, this tells us the curve is towards left. However, we need to resolve one problem on this concept.
 
@@ -64,9 +64,44 @@ In the above image, if we have the sum of the pixels in every column. Let's set 
 
 The above image demonstrates cases where this methods would not properly work. There is no gaurantee that the camera will always align with the straight line when driving in real environment. Thus it can detects the path as either left or right curve although actual path is the straight line. Thus we need center line adjustment.
 
-![sumcol](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/sumcol.PNG)
+![sumcor](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/sumcor.PNG)
+
+Now we only look at the 1/4 portion of the image to find proper center line. Suppose the index of the column starts from 0. If we calculate the center point based on the entire image, the index of center line becomes 5, which is not what we want to obtain. Thus, we only consider the bottom part of the image and calcuate the center line. Then we get 8.5, which is resonable enough to calculate the curve value from the current position.
 
 
+```python
+def getHistogram(img, minPer = 0.1, display = False, region = 1):
+    # Sum all the Columns
+    if region == 1:
+        histVals = np.sum(img, axis=0) # y-axis
+    else:
+        histVals = np.sum(img[img.shape[0]//region: :], axis=0)
+
+    # Find max value (to define correct curve regardless of noise)
+    maxVal = np.max(histVals)
+
+    # Set Threshold
+    minVal = minPer * maxVal
+
+    # Save columns that passes threshold and average them to find curvature
+    indexArray = np.where(histVals >= minVal)
+    centerPoint = int(np.average(indexArray))
+
+    # Plot histogram and Center point
+    if display:
+        imgHist = np.zeros((img.shape[0], img.shape[1], 3), np.uint8) # Create Empty Image
+
+        for x, intensity in enumerate(histVals):
+            cv2.line(imgHist, (x, img.shape[0]), (x, img.shape[0] - intensity // 255 // region), (0, 255, 0), 1) # Histogram
+            cv2.circle(imgHist, (centerPoint, img.shape[0]), 20, (0, 255,255), cv2.FILLED) # Center Point
+        return centerPoint, imgHist
+
+    return centerPoint
+```
+Sumation of pixels on each column is same as finding the histogram, so inside ```getHistogram()``` function, it adds all the number of pixels on each side and find left, right, or straight direciton. Since we also need to figure out how much to the direction, we also find index of columns that have value higher than our threshold value and average them to find true center point.
+
+Now when we visualize our base point, it correctly finds the center point although the path is toward left side.
+![histIMG](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/histIMG.PNG)
 
 ## Step 4 - Optimizing Curve
 
