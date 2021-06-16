@@ -130,7 +130,7 @@ Now we can visualize the curve values with respect to the current path of our se
 ## Real-time Demo
 <iframe width="560"
         height="315"
-        src="https://www.youtube.com/embed/QH2-TGUlwu4"
+        src="https://youtu.be/9CDj9lb-8HU"
         frameborder="0"
         allow="autoplay; encrypted-media"
         allowfullscreen></iframe>
