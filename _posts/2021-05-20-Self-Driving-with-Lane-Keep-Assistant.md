@@ -32,16 +32,26 @@ The above code simply converts the image to HSV color space and then apply a ran
 ![imgThres](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/imgThres.PNG)
 
 ## Step 2 - Bird Eye View (Warping)
-
+Since calculating the curve of the path would be only done by the path right in front and not a few seconds ahead, we need to crop the image. This is also known as a bird eye view and it is important to find the curve value. We need to set up initial points to warp the image and the values determined manually.
 
 
 ```python
-    Retrofit retrofit =  new  Retrofit.Builder()  
-	    .baseUrl("https://api.github.com/")  
-	    .build();
-	    
-	GitHubService service = retrofit.create(GitHubService.class);
+def warpImg(img, points, w, h, inv=False):
+    pts1 = np.float32(points) # Setting manually
+    pts2 = np.float32([[0,0], [w,0], [0,h], [w,h]]) # four points for warp
+
+    # Inverse just for displaying
+    if inv:
+        matrix = cv2.getPerspectiveTransform(pts2, pts1) # Create Transform Matrix
+    else:
+        matrix = cv2.getPerspectiveTransform(pts1, pts2)
+
+    imgWarp = cv2.warpPerspective(img, matrix, (w, h))
+    return imgWarp
 ```
+We receives the transformation matrix based on the input points and then warp the image using the ```warpPerspective``` function.
+
+![imgThres](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/warpIMG.PNG)
 
 생성된 ```GitHubService```로 부터의 ```Call```은 웹 서버로 비동기/동기적인 HTTP 요청을 전송한다.
 
