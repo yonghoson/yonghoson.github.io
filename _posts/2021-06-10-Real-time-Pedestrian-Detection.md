@@ -10,31 +10,54 @@ tags:
 - - - 
 
 
-## Overall Module Structure
-For this project, there will the main module that will connects to all various modules. The reason for having different modules for each different functionalities is that adding or modifying different modules becomes very convenient in this structure for the future upgrade.
+## Dataset
+For this project, I used around 1600 images consists of either with pedestrian or no pedestrian on the road. For the labels, I used 
 
-![structure](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/structure.PNG)
+Source: https://www.kaggle.com/tejasvdante/pedestrian-no-pedestrian
 
-## Step 1 - Finding Lane
+![structure](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/pedestrian.PNG)
 
-Since I used a regular A4 white paper as path, simply applying the color detection will find the path. Thus, the ```thresholding``` function will be defined as below:
+## CNN Model
+
 
 ```python
-def thresholding(img):
-    imgHsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV) # Convert to HSV
-    lower_white = np.array([80, 0, 0])            # Define Range of White color in HSV
-    upper_white = np.array([255, 160, 255])
-    mask_white = cv2.inRange(imgHsv, lower_white, upper_white)
-    return mask_white 
-```
-The above code simply converts the image to HSV color space and then apply a range of color to find the white paper path.
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 198, 198, 32)      320       
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 99, 99, 32)        0         
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 97, 97, 64)        18496     
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 48, 48, 64)        0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 46, 46, 64)        36928     
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 23, 23, 64)        0         
+_________________________________________________________________
+flatten (Flatten)            (None, 33856)             0         
+_________________________________________________________________
+dense (Dense)                (None, 128)               4333696   
+_________________________________________________________________
+dropout (Dropout)            (None, 128)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 2)                 258       
+=================================================================
 
+```
+
+
+## Evaluation
+We can see that our accuracy goes up with each epoch and loss comes down.
+
+![structure](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/pedestrian.PNG)
 
 ## Real-time Demo
 
 <iframe width="560"
         height="315"
-        src="https://www.youtube.com/embed/9CDj9lb-8HU"
+        src="https://www.youtube.com/embed/mlv56ChJPcY"
         frameborder="0"
         allow="autoplay; encrypted-media"
         allowfullscreen></iframe>
