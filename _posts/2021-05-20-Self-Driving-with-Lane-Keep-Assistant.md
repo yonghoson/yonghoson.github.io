@@ -66,15 +66,15 @@ The above image demonstrates cases where this methods would not properly work. T
 
 ![sumcor](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/sumcor.PNG)
 
-Now we only look at the 1/4 portion of the image to find proper center line. Suppose the index of the column starts from 0. If we calculate the center point based on the entire image, the index of center line becomes 5, which is not what we want to obtain. Thus, we only consider the bottom part of the image and calcuate the center line. Then we get 8.5, which is resonable enough to calculate the curve value from the current position.
+Now we only look at the 1/4 portion at the bottom of the image to find proper center line. Suppose the index of the column starts from 0. If we calculate the center point based on the entire image, the index of center line becomes 5, which is not what we want to obtain. Thus, we only consider the bottom part of the image and calcuate the center line. Then we get 8.5, which is resonable enough to calculate the curve value from the current position.
 
 
 ```python
 def getHistogram(img, minPer = 0.1, display = False, region = 1):
     # Sum all the Columns
-    if region == 1:
+    if region == 1: # For Entire Image
         histVals = np.sum(img, axis=0) # y-axis
-    else:
+    else:           # 1/4 of Image
         histVals = np.sum(img[img.shape[0]//region: :], axis=0)
 
     # Find max value (to define correct curve regardless of noise)
@@ -83,7 +83,7 @@ def getHistogram(img, minPer = 0.1, display = False, region = 1):
     # Set Threshold
     minVal = minPer * maxVal
 
-    # Save columns that passes threshold and average them to find curvature
+    # Save columns that passes threshold and average them to find center
     indexArray = np.where(histVals >= minVal)
     centerPoint = int(np.average(indexArray))
 
@@ -104,6 +104,26 @@ Now when we visualize our base point, it correctly finds the center point althou
 ![histIMG](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/histIMG.PNG)
 
 ## Step 4 - Optimizing Curve
+Now we want to know the intensity of curve. Suppose the center point is at 240 from the entire image. We can also find out the center point on the 4th portion at the bottom in the previous step. We get the average value of 278. This means the actual center of the image is 278 instead. Thus, we subtract our average value from the center value we got before from the entire image, which is 240 - 278 = -38. The negative sign indicates the curve is towards the left side and the intensity of curve is 51. Then we can append curve value to a list to average them to allow smooth motion.
+
+```python
+# Find Center Point Using Histogram
+middlePoint, imgHist = utlis.getHistogram(imgWarp, display=True, minPer=0.5, region=4) # 1/4 of the image
+curveAvgPoint, imgHist1 = utlis.getHistogram(imgWarp, display=True, minPer=0.9)        # Total Image
+curveRaw = curveAvgPoint - middlePoint # This will be averaged
+
+# Averaging for smooth motion instead of dramatic movements
+curveList.append(curveRaw)
+if len(curveList) > avgVal:
+    curveList.pop(0)
+
+# Find Curve
+curve = int(sum(curveList)/len(curveList))
+```
+Now we can visualize the curve values with respect to the current path of our self-driving car in real-time.
+![curveval](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/curveval.PNG)
+
+## Hardware Implementation
 
 
 
@@ -111,15 +131,6 @@ Now when we visualize our base point, it correctly finds the center point althou
 
 
 
-## Conclusion
-
-* 빠른 속도, 안정성.
-* 쉽게 설치하고, 사용할 수 있다.
-* 어노테이션을 사용하여 직관적이고, 가독성이 뛰어나다.
-* 플러그인 형태를 취하고 있어, 유지보수에 편하다.
 
 
-## 4. 단점
-* 타 라이브러리에 비해 추가기능이 많은 편은 아니다.
-* OkHttp의 상위에서 구현된 라이브러리로, 기본적으로 OkHttp에 의존적이다. <sub>(사실 OkHttp도 매우 좋은 라이브러리로, 그다지 단점은 아님)</sub>
 
