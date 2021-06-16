@@ -124,10 +124,15 @@ Now we can visualize the curve values with respect to the current path of our se
 ![curveval](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/curveval.PNG)
 
 ## Hardware Implementation
+* OS: Raspberry Pi™ 3
+* Camera: Raspberry Pi Camera 8MP V2
+* Motor: iRobot Create® 2 Programmable Robot
 
+### Webcam Module
 
 
 ## Real-time Demo
+
 <iframe width="560"
         height="315"
         src="https://www.youtube.com/embed/9CDj9lb-8HU"
