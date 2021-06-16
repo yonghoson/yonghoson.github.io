@@ -255,6 +255,8 @@ if __name__ == '__main__':
         allow="autoplay; encrypted-media"
         allowfullscreen></iframe>
 
-If you are also interested in pedestrian detection, check this post! {% post_url 2021-05-20-Self-Driving-with-Lane-Keep-Assistant %}
+
+If you are also interested in pedestrian detection, check this post! 
+Pedestrian Detection [servr]{% post_url 2021-05-20-Self-Driving-with-Lane-Keep-Assistant %}
 
 

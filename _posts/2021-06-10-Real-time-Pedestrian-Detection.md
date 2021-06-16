@@ -6,7 +6,6 @@ tags:
 ---
 > The real-time pedestrian detection using trained model from CNN.
 
-
 - - - 
 
 
@@ -18,7 +17,6 @@ Source: https://www.kaggle.com/tejasvdante/pedestrian-no-pedestrian
 ![structure](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/pedestrian.PNG)
 
 ## CNN Model
-
 
 ```python
 _________________________________________________________________
@@ -44,14 +42,20 @@ dropout (Dropout)            (None, 128)               0
 _________________________________________________________________
 dense_1 (Dense)              (None, 2)                 258       
 =================================================================
-
 ```
+
+## Train Python Code
+
 
 
 ## Evaluation
 We can see that our accuracy goes up with each epoch and loss comes down.
 
-![structure](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/pedestrian.PNG)
+![structure](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/eval.PNG)
+
+## Test Python Code
+
+
 
 ## Real-time Demo
 
