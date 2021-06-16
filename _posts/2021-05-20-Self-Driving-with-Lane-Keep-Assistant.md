@@ -255,7 +255,8 @@ if __name__ == '__main__':
         allow="autoplay; encrypted-media"
         allowfullscreen></iframe>
 
-If you are also interested in pedestrian detection, check this post! 
+<div id="content">{{ content | newline_to_br }}</div>
+If you are interested in pedestrian detection, also check this post! 
 
 
 
