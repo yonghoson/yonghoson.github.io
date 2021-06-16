@@ -257,6 +257,6 @@ if __name__ == '__main__':
 
 \
 If you are interested in pedestrian detection, also check this post! 
-
+[a link](https://github.com/yonghoson/yonghoson.github.io/blob/master/_posts/2021-06-10-Real-time-Pedestrian-Detection.md)
 
 
