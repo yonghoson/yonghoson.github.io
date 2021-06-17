@@ -192,7 +192,7 @@ plt.show()
 ```
 Kalman filter output from the original trajectory. Cut-offs that are recovered from the
 filter are specified by a black circle.
-![kalman](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/kalman.PNG)
+![kalman](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/kalman.png)
 
 ## Ad-hoc Camera Network
 Until this section, we only produced the 2D trajectory of the drone in each of the seven videos from
@@ -202,10 +202,12 @@ parameters for calibration for each camera, such as focal length and radial dist
 parameters of the seven camera setup are recovered during the operation, which is synchronization
 between different cameras and camera poses.
 
+This is the pipeline code for the Ad-hoc Camera Network: [Pipeline Code](https://github.com/CenekAlbl/mvus)
+This is the dataset which contains videos of the drone: [Dataset](https://github.com/CenekAlbl/drone-tracking-datasets)
 
 
-The image below is the reconstructed 3D trajectory from the unsynchronized seven videos.
-![3dtraj](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/3dtraj.PNG)
+The image below is the reconstructed 3D trajectory from the unsynchronized seven videos with out 2D trajectory detection mechanism.
+![kmlearth](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/kmlearth.PNG)
 
 
 ## Conclusion
