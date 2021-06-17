@@ -206,12 +206,12 @@ This is the pipeline code: [Pipeline Code](https://github.com/CenekAlbl/mvus) \
 This is the dataset of drone videos: [Dataset](https://github.com/CenekAlbl/drone-tracking-datasets)
 
 
-The image below is the reconstructed 3D trajectory from the unsynchronized seven videos with out 2D trajectory detection mechanism.
+The image below shows the reconstructed 3D trajectory from the unsynchronized seven videos with our 2D trajectory detection mechanism.
 ![kmlearth](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/kmlearth.png)
 
 
 ## Conclusion
-In this project, we have demonstrated a robust real-time tracking technique that formulates the
+In this project, I have demonstrated a robust real-time tracking technique that formulates the
 tracking as a binary classification between object and background. Since coping with the variations in appearance during tracking was the key, we brought on-line AdaBoost algorithm which
 updates features of the tracker during tracking the object. Then we presented a two-step based
 implementation of the Kalman filter, which is a very powerful tool when our 2D trajectory detections have some noises like cut-offs. After improving trajectory estimation, we reconstruct the
