@@ -17,7 +17,7 @@ Dataset Source: [Dataset](https://www.kaggle.com/tejasvdante/pedestrian-no-pedes
 ![pedestrian](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/pedestrian.PNG)
 
 ## Importing Images
-First we import images from the directory where images are stored using ```os``` library. Then we split the data into train and test sets. as you can see in the ```parameters``` section, the ratio has been set to 0.2, which means if there are 1000 images, then we will use 200 imgages for testing.
+First we import images from the directory path where images are stored using ```os``` library. Then we split the data into train and test sets as you can see in the ```parameters``` section, the ratio has been set to 0.2, which means if there are 1000 images, then we will use 200 imgages for testing.
 
 ```python
 # Parameters
@@ -60,7 +60,7 @@ X_train, X_validation, y_train, y_validation = train_test_split(X_train, y_train
 ```
 
 # Pre-process Images
-First we convert the image into grayscale, then we equalizing the image so that we can standardize the lighting in the image. Lastly we normalizing the values in range between 0 to 1 instead to having values 0 to 255.
+First we convert the image into grayscale, then we equalizing the image to standardize the lighting in the image. Lastly we normalizing the values in range between 0 to 1 instead to having values 0 to 255.
 
 ```python
 def grayscale(img):
@@ -84,7 +84,7 @@ X_test = np.array(list(map(preprocessing, X_test)))
 ```
 
 ## Augmentation
-Image augmentation is required if we want to make the model to be generic. It includes shifting the image into left, right, and zooming in. Eventually it creates different dataset, which is more generalized.
+Image augmentation is required if we want to make the model to be more generic. It includes shifting the image into left, right, and zooming-in. Eventually it creates different dataset, which is more generalized.
 
 ```python
 dataGen = ImageDataGenerator(width_shift_range=0.1,
@@ -99,7 +99,7 @@ X_batch, y_batch = next(batches)
 ```
 
 ## Convolutional Neural Network Model
-Now it's time to create out CNN model. It has some convolutional layers, pooling layers, and drop out layers. Lastly we have dense layer as an output layer to obtain probability of each labels of our dataset. 
+Now it's time to create our CNN model. It has some convolutional layers, pooling layers, and drop out layers. Lastly we have a dense layer as an output layer to obtain probability of each labels of our dataset. 
 
 
 ```python
@@ -127,15 +127,13 @@ model = myModel()
 ```
 
 ## Training
-Now we send our data directly into the model with the parameters we already defined for training. When the training is done, it will shows us the plot with loss and accuracy scores. At the end, we will store the model that we have created into ```h5``` format so that we can use for testing later on.
+Now we send our data directly into the model with the parameters we already defined for training. When the training is done, it will show us the plot with the loss and accuracy scores. At the end, we will store the model into ```h5``` format, so that we can use for testing later on.
 
 ```python
 history = model.fit(dataGen.flow(X_train, y_train, batch_size=batch_size_val),
                               epochs=epochs_val,
                               validation_data=(X_validation, y_validation),
                               shuffle=1)
-
-
 
 # Plot Eval
 plt.figure(1)
@@ -187,7 +185,7 @@ model = load_model('trained_model.h5')
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 ```
 
-We also have to pre-process the images coming from our camera in real-time before feed into our model. Same pre-processing procedure we have done before train the model apply to the captured images. And we have class names so that we can display on the console. Inside the while loop we continously receive the image from the webcam and call all the defined functions to detect pedestrian detection in real-time.
+We have to pre-process the images coming from our camera in real-time before feed into our model. Same pre-processing procedure applies to the captured images from the webcam. And we have class names so that we can display on the console. Inside the while loop we continously receive the image and call all the defined functions to detect pedestrian detection in real-time.
 
 ```python
 def grayscale(img):
