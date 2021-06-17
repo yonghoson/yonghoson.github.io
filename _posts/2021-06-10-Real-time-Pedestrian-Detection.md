@@ -10,9 +10,9 @@ tags:
 
 
 ## Overview
-CNNs have been gaining popularity in the past couple of years due to their ability to generalize and classify the data with high accuracy. In this project, I will train around 1600 images of two different classes with the felp of tensorflow and keras. Classes are either pedestrian or no pedestrian on the road. For the labels, I used "0" to indicate pedestrian and "1" to indicate no-pedestrian as you will see in the implemented codes.
+CNNs have been gaining popularity in the past couple of years due to their ability to generalize and classify the data with high accuracy. In this project, I will train around 1600 images of two different classes with the help of tensorflow and keras. Classes are classified as either ```pedestrian``` or ```no pedestrian``` on road images. For the labels, I used "0" to indicate pedestrian and "1" to indicate no-pedestrian as you will see in the implemented codes.
 
-Dateset Source: https://www.kaggle.com/tejasvdante/pedestrian-no-pedestrian
+Dataset Source: [Dataset](https://www.kaggle.com/tejasvdante/pedestrian-no-pedestrian)
 
 ![pedestrian](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/pedestrian.PNG)
 
