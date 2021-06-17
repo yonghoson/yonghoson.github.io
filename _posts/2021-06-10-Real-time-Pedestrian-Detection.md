@@ -59,7 +59,7 @@ X_train, X_test, y_train, y_test = train_test_split(images, classNo, test_size=t
 X_train, X_validation, y_train, y_validation = train_test_split(X_train, y_train, test_size=validationRatio, shuffle=True)
 ```
 
-# Pre-process Images
+## Pre-process Images
 First we convert the image into grayscale, then we equalizing the image to standardize the lighting in the image. Lastly we normalizing the values in range between 0 to 1 instead to having values 0 to 255.
 
 ```python
