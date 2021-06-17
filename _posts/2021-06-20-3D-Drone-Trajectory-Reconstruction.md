@@ -109,13 +109,22 @@ cv2.destroyAllWindows()
 As you can see at the end, we stored all the 2D trajectory information into ```.npy``` format for the later use, which is to improve trajectory estimation using the Kalman filter.
 
 ### Adaptivity
-
+The adaptivity of the tracker is defined by selecting the best features depending on the background.
+Now we demonstrate how the on-line feature selection method can adapt proficiently to the
+current tracking problem. We changed the background to the same texture, which is the same as
+the patch. The image below shows that the target object was still successfully tracked by the algorithm
+although the background was the same texture as the object
 
 ![adaptivity](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/adaptivity.PNG)
 
 
 ### Robustness
-
+A successful tracker should manage various appearance changes of the target object, including
+occlusions, rotations, and movement. The sequence shows a clock keeps tracked by the tracker although
+a significant portion of the object has been occluded. It implies that the tracker is continuously
+adapting to the background. Also, the tracker keeps track of the object with the movement in
+an upward direction and rotation by the hand. It shows that the tracker has been updated the
+object’s feature and confidence score in real-time.
 
 ![robustness](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/robustness.PNG)
 
@@ -132,15 +141,81 @@ It tracks the drone successfully although the size is extremely small in the vid
 
 
 ## Kalman Filter
+We applied the Kalman filter on the trajectory output from
+AdaBoost to produce a smoother trajectory for better trajectory estimation. The basic idea of
+the Kalman filter is using the prior knowledge of the state, which is the output from Adaboost in
+our project.
+\
+The code below implemented by using the ```pykalman``` library. As you can see, we set initial settings, such as transition matrix, observation matrix and corresponding covariances.
+
+```python
+Measured = np.load("Drone_Trajectory0.npy")
+MarkedMeasure = []
+
+for m in Measured:
+    m = m[:-1]
+    MarkedMeasure.append(m)
+
+MarkedMeasure = np.array(MarkedMeasure)
+
+Transition_Matrix = [[1,0,1,0],[0,1,0,1],[0,0,1,0],[0,0,0,1]]
+Observation_Matrix = [[1,0,0,0],[0,1,0,0]]
+xinit = MarkedMeasure[0,0]
+yinit = MarkedMeasure[0,1]
+vxinit = MarkedMeasure[1,0]-MarkedMeasure[0,0]
+vyinit = MarkedMeasure[1,1]-MarkedMeasure[0,1]
+initstate = [xinit,yinit,vxinit,vyinit]
+initcovariance = 1.0e-3*np.eye(4)
+transistionCov = 1.0e-4*np.eye(4)
+observationCov = 1.0e-1*np.eye(2)
+
+kf = KalmanFilter(transition_matrices=Transition_Matrix,
+                  observation_matrices =Observation_Matrix,
+                  initial_state_mean=initstate,
+                  initial_state_covariance=initcovariance,
+                  transition_covariance=transistionCov,
+                  observation_covariance=observationCov)
 
 
+(filtered_state_means, filtered_state_covariances) = kf.smooth(MarkedMeasure)
+
+# Produce Kalman Output
+plt.figure(figsize=(12,8))
+plt.subplot(1, 2, 1)
+plt.plot(MarkedMeasure[:,0], MarkedMeasure[:,1],'xr',label='measured')
+plt.title("Original")
+plt.subplot(1, 2, 2)
+plt.plot(filtered_state_means[:,0], filtered_state_means[:,1], 'ob', label='kalman output')
+plt.legend(loc=2)
+plt.title("Kalman Filter")
+plt.show()
+```
+Kalman filter output from the original trajectory. Cut-offs that are recovered from the
+filter are specified by a black circle.
+![kalman](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/kalman.PNG)
 
 ## Ad-hoc Camera Network
+Until this section, we only produced the 2D trajectory of the drone in each of the seven videos from
+the dataset that were filmed with cheap and easy-to-deploy types of equipment. Now it’s time
+to reconstruct 3D trajectories from unsynchronized consumer cameras. We only assume intrinsic
+parameters for calibration for each camera, such as focal length and radial distortion. All other
+parameters of the seven camera setup are recovered during the operation, which is synchronization
+between different cameras and camera poses.
 
+
+
+The image below is the reconstructed 3D trajectory from the unsynchronized seven videos.
+![3dtraj](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/3dtraj.PNG)
 
 
 ## Conclusion
-
+In this project, we have demonstrated a robust real-time tracking technique that formulates the
+tracking as a binary classification between object and background. Since coping with the variations in appearance during tracking was the key, we brought on-line AdaBoost algorithm which
+updates features of the tracker during tracking the object. Then we presented a two-step based
+implementation of the Kalman filter, which is a very powerful tool when our 2D trajectory detections have some noises like cut-offs. After improving trajectory estimation, we reconstruct the
+trajectory of the drone using seven different 2D paths obtained from the external cameras. The
+network takes care of calibration, rolling shutter effects, and geometry computation to produce
+cm-accurate trajectories.
 
 To read more about this project: [Paper](/res/327report.pdf)
 
