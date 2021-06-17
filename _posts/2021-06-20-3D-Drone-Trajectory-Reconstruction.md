@@ -9,15 +9,23 @@ tags:
 - - - 
 
 
-## Dataset
-For this project, I used around 1600 images consists of either with pedestrian or no pedestrian on the road. For the labels, I used "0" to indicate pedestrian and "1" to indicate no-pedestrian as you will see in the implemented codes.
+## On-line Adaboost
 
-Dateset Source: https://www.kaggle.com/tejasvdante/pedestrian-no-pedestrian
+
 
 ![pedestrian](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/pedestrian.PNG)
 
+## Kalman Filter
 
 
+## Ad-hoc Camera Network
+
+
+
+## Conclusion
+
+
+To read more about this project: [Paper](/res/myCV.pdf)
 
 ## Drone Tracking Demo
 
