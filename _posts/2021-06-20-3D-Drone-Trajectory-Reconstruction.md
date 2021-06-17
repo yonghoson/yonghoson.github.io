@@ -202,12 +202,12 @@ parameters for calibration for each camera, such as focal length and radial dist
 parameters of the seven camera setup are recovered during the operation, which is synchronization
 between different cameras and camera poses.
 
-This is the pipeline code for the Ad-hoc Camera Network: [Pipeline Code](https://github.com/CenekAlbl/mvus)
-This is the dataset which contains videos of the drone: [Dataset](https://github.com/CenekAlbl/drone-tracking-datasets)
+This is the pipeline code: [Pipeline Code](https://github.com/CenekAlbl/mvus) \
+This is the dataset of drone videos: [Dataset](https://github.com/CenekAlbl/drone-tracking-datasets)
 
 
 The image below is the reconstructed 3D trajectory from the unsynchronized seven videos with out 2D trajectory detection mechanism.
-![kmlearth](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/kmlearth.PNG)
+![kmlearth](https://raw.githubusercontent.com/yonghoson/yonghoson.github.io/master/images/kmlearth.png)
 
 
 ## Conclusion
