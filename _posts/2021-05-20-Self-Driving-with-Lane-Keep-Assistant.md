@@ -4,7 +4,7 @@ categories:
 tags:
    - 
 ---
-> The self-driving car with lane keep assistant using opencv.
+> Self-driving car with lane keep assistant using OpenCV.
 
 
 - - - 

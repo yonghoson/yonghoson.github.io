@@ -4,7 +4,7 @@ categories:
 tags:
    - 
 ---
-> The real-time pedestrian detection using trained model from CNN.
+> Real-time pedestrian detection using CNN.
 
 - - - 
 
